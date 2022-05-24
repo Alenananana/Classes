@@ -4,22 +4,18 @@ export default class Character {
      this.type = type;
      this.health = 100;
      this.level = 1;
-     this.attack = 0;
-     this.defence = 0;
+     this.attack = undefined;
+     this.defence = undefined;
      this.checkName(name);
    }
  
-   checkName(name) {
-     if (typeof name !== 'string') {
-       throw new Error('Имя должно состоять из букв');
-     } else if (typeof name === 'string' && (name.length < 2 || name.length > 10)) {
-       throw new Error('Ошибка. В имени должно быть min - 2 символа, max - 10');
-     } else {
-       this.checkType(this.type);
-     }
-   }
- 
-   // eslint-disable-next-line class-methods-use-this
+   constructor(name) {
+		if(name.length>2 && name.length<10){
+			this.name=name;
+		} else {
+			throw new Error('Длина имени должна быть не менее 2-ух и не более 10-ти символов');
+		}
+
    checkType(type) {
      const accessType = ['Bowman', 'Swordsman', 'Magician', 'Daemon', 'Undead', 'Zombie'];
      const accessTypeCheck = accessType.indexOf(type);
@@ -29,7 +25,6 @@ export default class Character {
    }
  
    printCharter() {
-     // eslint-disable-next-line no-console
      return `health: ${this.health}, level: ${this.level}, Атака/защита: ${this.type}:${this.attack}/${this.defence}`;
    }
  
@@ -40,7 +35,7 @@ export default class Character {
        this.defence *= 1.2;
        this.health = 100;
      } else {
-       throw new Error('Нельзя повысить левел умершего');
+       throw new Error('Нельзя повысить уровень умершего');
      }
    }
  
